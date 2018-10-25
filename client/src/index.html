@@ -1,0 +1,56 @@
+<html>
+
+	<head>
+
+		<script type = "text/javascript" ></script>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/> 
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+		<script>
+			$(document).ready(function(e){
+				var colorThreshold = 100
+				var color = "black";
+    			var spanText = document.querySelector("textarea");
+    				$('.form1').submit(function(e){
+						function changeColor(val) 
+						{
+    					 	
+    
+	    						if (val > 30)
+	    						 {
+	        						color = "green";
+	    						 } 
+	    						else if (val < 30)
+	    						 {
+	        						color = "red";
+	    						 }
+    
+    						spanText.style.color = color;
+						}
+					changeColor(colorThreshold);
+			e.preventDefault();
+						});
+    			});
+
+		</script>
+	</head>
+
+	<body>
+		<form class="form1"><label>CURRENCY FROM</label>
+					<input type ="text" class= "sourcecur" name ="sourcecur" />
+				<label>CURRENCY TO</label>
+					<input type ="text" class="destcur" name ="destcur" >
+					<input type ="submit"class ="res" value ="submit"/><br/><br/>
+				<label>DIFFERENCE</label>
+				
+				    <input type="radio" name="diff" value="DAY" checked>DAY
+				    <input type="radio" name="diff" value="WEEK">WEEK
+				    <input type="radio" name="diff" value="MONTH">MONTH
+				
+		
+
+			
+		</form>
+		<textarea  id="cur" rows="2" cols="50">curency color</textarea>
+	</body>
+</html>
