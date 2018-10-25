@@ -9,10 +9,56 @@
 		<script>
 			$(document).ready(function(e){
 				var colorThreshold = 100
-				var color = "black";
-    			var spanText = document.querySelector("textarea");
-    				$('.form1').submit(function(e){
-						function changeColor(val) 
+				var color = "black"
+				var diff
+				var rate_value
+				var sourcecur
+				var destcur
+    			//var spanText = document.getElementById('cur')
+    			if (document.getElementById('day').checked) {
+									  rate_value = document.getElementById('day').value;
+									}
+								else if(document.getElementById('week').checked) {
+									  rate_value = document.getElementById('week').value;
+									}
+								else  
+									  rate_value = document.getElementById('month').value;
+    				$('form').submit(function(e){
+    					 
+    					 sourcecur = $(".sourcecur").val();
+		  				 destcur = $(".destcur").val();
+						 diff = rate_value;
+								
+								
+									
+						    
+	    				  var settings = {
+						  
+						  "crossDomain" :true,
+						  "url":'http://127.0.0.1:5000/',
+
+						  "type": "GET",
+						  "data":{source:sourcecur,destination:destcur,diff:diff},
+						  
+							}		
+
+
+						$.ajax(settings).done(function(response) {
+				  		
+						alert("hello")
+						if(response)
+					
+							{
+				 				alert("hii")
+							}
+						else
+							{
+								$(".cur").text(response.output[0]);
+							}
+						//changeColor(colorThreshold)
+						
+					});	
+						/*function changeColor(val) 
 						{
     					 	
     
@@ -27,10 +73,11 @@
     
     						spanText.style.color = color;
 						}
-					changeColor(colorThreshold);
+					*/
 			e.preventDefault();
-						});
+						
     			});
+    			});	
 
 		</script>
 	</head>
@@ -42,15 +89,15 @@
 					<input type ="text" class="destcur" name ="destcur" >
 					<input type ="submit"class ="res" value ="submit"/><br/><br/>
 				<label>DIFFERENCE</label>
-				
-				    <input type="radio" name="diff" value="DAY" checked>DAY
-				    <input type="radio" name="diff" value="WEEK">WEEK
-				    <input type="radio" name="diff" value="MONTH">MONTH
-				
+				<div id ="rates">
+				    <input type="radio" id= "day" name="diff" value="DAY" checked>DAY
+				    <input type="radio" id ="week" name="diff" value="WEEK">WEEK
+				    <input type="radio" id = "month" name="diff" value="MONTH">MONTH
+				</div>
 		
 
 			
 		</form>
-		<textarea  id="cur" rows="2" cols="50">curency color</textarea>
+		<textarea  id="cur" rows="2" cols="50"></textarea>
 	</body>
 </html>
