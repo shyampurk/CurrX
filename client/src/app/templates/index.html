@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+
+		<script type = "text/javascript" >
+		</script>	
+		
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/> 
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+			
+		</script>
+
+		<script>
+			$(document).ready(function(e){
+
+				var colorThreshold 
+				var color = "black"
+				var diff=""
+				var rate_value=""
+				var sourcecur=""
+				var destcur=""
+    			var spanText = document.getElementById('cur2')
+    			
+
+
+    			sourcecur = $(".sourcecur").val();
+	    		destcur = $(".destcur").val();
+	    		
+				
+				
+						
+    				$('form').submit(function(e){
+    						if($(".sourcecur").val()==""||$(".destcur").val()=="")
+								{
+									alert("input canot be empty");
+
+								}
+    						else 
+    						{
+			    					if (document.getElementById('day').checked) 
+			    						{
+									//rate_value = document.getElementById('day').value;
+											diff = 1;
+										}
+									else if(document.getElementById('week').checked) 
+										{
+											//rate_value = document.getElementById('week').value;
+											diff = 7;
+										}
+									else  
+										{
+											//rate_value = document.getElementById('month').value;
+											diff = 30;
+										}
+			    					 
+			    				     
+							diff = diff;		
+							
+							document.getElementById('cur2').visible = true;  
+									
+				    				 var settings = {
+									  
+										  "crossDomain" :true,
+										  "url":"/index_get_data",
+										  "async": true,
+										  "type": "GET",
+										  "data":{source:sourcecur,destination:destcur,diff:diff},
+										  "dataType" :"json",
+										  "dataSrc": "data",
+		                				 "contentType":"application/json",
+										  "error": function(xmlhttprequest, textstatus, message) {
+										  	alert("network error");
+										  }
+
+									//	  "error" : function(x) {
+									//		 alert(message);
+											
+							       	//		}
+
+										  
+
+										}	
+
+								$("#cur").text("loading....");			
+							}
+
+
+
+										$.ajax(settings).done(function(data) {
+								  			
+										
+											if(data.data[0].success == "true")
+										
+												{
+													colorThreshold = (JSON.parse(data.data[0].difference));
+													changeColor(colorThreshold)
+
+										            $("#cur").text(JSON.parse(data.data[0].currency).toFixed(2));
+												    $("#cur2").text("("+JSON.parse(data.data[0].difference).toFixed(2)+")");
+									 				
+												}
+											else
+												{
+													$("#cur").text(JSON.stringify(data.data[0].error));
+
+
+												}
+										});	
+								
+								
+							
+								function changeColor(val) 
+								{
+		    					 	
+		    
+			    						if (val > 1)
+			    						 {
+			        						color = "green";
+			    						 } 
+			    						else if (val < 0)
+			    						 {
+			        						color = "red";
+			    						 }
+			    						 else if(val == 0)
+			    						 {
+			    						 	color ="black"
+			    						 }
+		    
+		    						spanText.style.color = color;
+								}
+							
+					
+						e.preventDefault();		
+		    			});
+		    			});	
+
+		</script>
+	</head>
+
+	<body>
+		<form class="form1">
+				<label>CURRENCY FROM</label>
+					<input type ="text" class= "sourcecur" id ="source" name ="sourcecur" />
+				<label>CURRENCY TO</label>
+					<input type ="text" class="destcur" id ="destination" name ="destcur" >
+				<input type ="submit"class ="res" value ="submit"/><br/><br/>
+				<label>DIFFERENCE</label>
+					<div id ="rates">
+					    <input type="radio" id= "day" name="diff" value="DAY" checked>DAY
+					    <input type="radio" id ="week" name="diff" value="WEEK">WEEK
+					    <input type="radio" id = "month" name="diff" value="MONTH">MONTH
+					</div>
+		
+
+			
+		</form>
+		<div>
+		<span id="cur" ></span>
+		<span></span>
+		
+		<span id ="cur2"></span>
+
+		</div>
+		</body>
+</html>
