@@ -40,6 +40,4 @@ def lambda_handler(event,context):
 		response["error"] = "Internal server error"
 	return (response)
 	
-if __name__ == '__main__':
-	returnval =  lambda_handler({'sourcecur':'EUR','dstcur':'INR','difference':'7'},None)
-	print(returnval)
+
