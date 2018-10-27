@@ -14,21 +14,21 @@ def lambda_handler(event,context):
 		params_history = {'base':event['sourcecur'],'symbols':event['dstcur']}
 		historical_date = ""
 	
-		historical_date = datetime.date.today()-datetime.timedelta(event['difference'])
+		historical_date = datetime.date.today()-datetime.timedelta(int(event['difference']))
 		
 		historical = requests.get("http://data.fixer.io/api/"+str(historical_date)+"?access_key=2e53c2379ff391cdad21359b4b83e3a2&symbols=USD,AUD,CAD,PLN,MXN&format=1",params=params_history)
 		history = historical.json()
 
 
 		if current_cur['success'] == True:
-        		response["Success"]= "true" 
-        		response["Currency"] = "{:.2f}".format(current_cur['rates'][finalcur])
-        		difference = "{:.2f}".format(current_cur['rates'][finalcur]-history['rates'][finalcur])
-        		if float(difference) < 0:
-        			response['difference'] =  difference
-        		if float(difference) > 0: 
-        			response['difference'] = "+" + difference
-        
+				response["Success"]= "true" 
+				response["Currency"] = "{:.2f}".format(current_cur['rates'][finalcur])
+				difference = "{:.2f}".format(current_cur['rates'][finalcur]-history['rates'][finalcur])
+				if float(difference) < 0:
+					response["difference"] = difference
+				elif float(difference) > 0 :
+					response["difference"] = "+" + difference
+				
 
 		elif current_cur['success'] == False:
 				response["status"]= "false"
@@ -37,5 +37,4 @@ def lambda_handler(event,context):
 		response["status"]= "false"	 
 		response["error"] = "Internal server error"
 	return (response)
-    
 	
