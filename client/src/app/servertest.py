@@ -15,13 +15,13 @@ def stuff():
     "data": [
       
      {
-        "success":"true",
-        "currency":90.08222,
-        "difference":28.093333
+        "SUCCESS":True,
+        "Currency":90.08222,
+        "Difference":-100.0989
        }#,
-      # {"success":"true",
-        #"error":"error"}
-         ]
+      #{"success":False,
+        #"Error":"error"}
+        ]
   }
   return jsonify(data)
  

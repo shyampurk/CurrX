@@ -54,55 +54,56 @@
 											diff = 30;
 										}
 			    					 
-			    				     
-							diff = diff;		
-							
-							document.getElementById('cur2').visible = true;  
+					    				     
+									diff = diff;		
 									
-				    				 var settings = {
-									  
-										  "crossDomain" :true,
-										  "url":"/index_get_data",
-										  "async": true,
-										  "type": "GET",
-										  "data":{source:sourcecur,destination:destcur,diff:diff},
-										  "dataType" :"json",
-										  "dataSrc": "data",
-		                				 "contentType":"application/json",
-										  "error": function(xmlhttprequest, textstatus, message) {
-										  	alert("network error");
-										  }
-
-									//	  "error" : function(x) {
-									//		 alert(message);
+									document.getElementById('cur2').visible = true;  
 											
-							       	//		}
+						    				 var settings = {
+											  
+												  "crossDomain" :true,
+												  "url":"/index_get_data",
+												  "async": true,
+												  "type": "GET",
+												  "data":{source:sourcecur,destination:destcur,diff:diff},
+												  "dataType" :"json",
+												  "dataSrc": "data",
+				                				 "contentType":"application/json",
+												  "error": function(xmlhttprequest, textstatus, message) 
+														  {
+														  	alert("network error");
+														  }
 
-										  
+											//	  "error" : function(x) {
+											//		 alert(message);
+													
+									       	//		}
 
-										}	
+												  
 
-								$("#cur").text("loading....");			
-							}
+												}	
+
+										$("#cur").text("loading....");			
+									}
 
 
 
 										$.ajax(settings).done(function(data) {
 								  			
 										
-											if(data.data[0].success == "true")
+											if(data.data[0].SUCCESS == true)
 										
 												{
-													colorThreshold = (JSON.parse(data.data[0].difference));
+													colorThreshold = (JSON.parse(data.data[0].Difference));
 													changeColor(colorThreshold)
 
-										            $("#cur").text(JSON.parse(data.data[0].currency).toFixed(2));
-												    $("#cur2").text("("+JSON.parse(data.data[0].difference).toFixed(2)+")");
+										            $("#cur").text(JSON.parse(data.data[0].Currency).toFixed(2));
+												    $("#cur2").text("("+JSON.parse(data.data[0].Difference).toFixed(2)+")");
 									 				
 												}
 											else
 												{
-													$("#cur").text(JSON.stringify(data.data[0].error));
+													$("#cur").text(JSON.stringify(data.data[0].Error));
 
 
 												}
@@ -114,7 +115,7 @@
 								{
 		    					 	
 		    
-			    						if (val > 1)
+			    						if (val > 0)
 			    						 {
 			        						color = "green";
 			    						 } 
