@@ -36,8 +36,8 @@ def lambda_handler(event,context):
 				response["Success"]= "False"
 				response["Error"] = "Invalid data"
 	except requests.exceptions.HTTPError as e:
-		response["status"]= "false"	 
-		response["error"] = "Internal server error"
+		response["Success"]= "False"	 
+		response["Error"] = "Internal server error"
 	return (response)
 	
 
