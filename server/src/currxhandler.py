@@ -21,20 +21,25 @@ def lambda_handler(event,context):
 
 
 		if current_cur['success'] == True:
-				response["Success"]= "true" 
+				response["Success"]= "True" 
 				response["Currency"] = "{:.2f}".format(current_cur['rates'][finalcur])
 				difference = "{:.2f}".format(current_cur['rates'][finalcur]-history['rates'][finalcur])
 				if float(difference) < 0:
+					response["difference"] = difference
+				elif float(difference) == 0:
 					response["difference"] = difference
 				elif float(difference) > 0 :
 					response["difference"] = "+" + difference
 				
 
 		elif current_cur['success'] == False:
-				response["status"]= "false"
+				response["status"]= "False"
 				response["error"] = "Invalid data"
 	except requests.exceptions.HTTPError as e:
 		response["status"]= "false"	 
 		response["error"] = "Internal server error"
 	return (response)
 	
+if __name__ == '__main__':
+	returnval =  lambda_handler({'sourcecur':'EUR','dstcur':'INR','difference':'7'},None)
+	print(returnval)
